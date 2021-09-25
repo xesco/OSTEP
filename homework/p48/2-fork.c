@@ -9,8 +9,11 @@
 
 int
 main(int argc, char *argv[]) {
+    char *strp = "I am the parent!\n";
+    char *strc = "I am the child!\n";
+
     int fd = open("./newfile.txt", O_WRONLY|O_CREAT|O_TRUNC, S_IRWXU);
-    assert(fd > -1);
+    assert(fd>-1);
     
     int rc = fork();
     if (rc < 0) {
@@ -18,10 +21,10 @@ main(int argc, char *argv[]) {
     } else if (rc == 0) {
         int i = 0;
         while(i++ < LOOP)
-            write(fd, "I am the child!\n", 16);
+            write(fd, strc, strlen(strc));
     } else {
         int i = 0;
         while(i++ < LOOP)
-            write(fd, "I am the parent!\n", 17);
+            write(fd, strp, strlen(strp));
     }
 }
